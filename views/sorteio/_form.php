@@ -71,8 +71,8 @@ Icon::map($this);
                 <div class="row">
                     <div class="col-lg-4 col-lg-offset-4">
                         <div>Possíveis Erros:</div>
-                        <li>Números Iguais</li>
-                        <li>Números em Branco ou com Zero</li>
+                        <li>Número Igual</li>
+                        <li>Número em Branco ou com Zero</li>
                         <li>Número Fora da Variação</li>
                     </div>
                 </div>
@@ -319,6 +319,7 @@ Icon::map($this);
 
         $(document).on("blur", ".jogo", function () {
             var id = $(this).attr('id');
+            var flag = true;
 
             var arr = [];
             $('.jogo-' + id).each(function (index) {
@@ -329,18 +330,13 @@ Icon::map($this);
             $('.jogo-' + id).each(function () {
                 var cNumero = $(this).val();
                 if (checaEqual(arr, cNumero) >= 2 && cNumero !== '') {
+                    error();
                     $(this).addClass('jogo-error');
                 } else {
                     $(this).removeClass('jogo-error');
                 }
             });
-
-            if ($('.jogo-' + id).hasClass('jogo-error')) {
-                error();
-            } else {
-                $('#error').addClass('hidden');
-            }
-
+                        
         });
 
         function checaEqual(arr, numero) {
@@ -359,8 +355,7 @@ Icon::map($this);
             var flag = true;
 
             $('.jogo').each(function () {
-                if ($(this).val() === '0' || $(this).val() === '' || $(this).hasClass('jogo-error') || $(this).val() <= variacao)
-                    error();
+                if (parseInt($(this).val()) === 0 || $(this).val() === '' || $(this).hasClass('jogo-error') || $(this).val() > variacao)
                     flag = false;
             });
 

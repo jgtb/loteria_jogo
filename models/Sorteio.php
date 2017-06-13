@@ -75,60 +75,15 @@ class Sorteio extends \yii\db\ActiveRecord {
     public function getTimeSorteado() {
         return TimeSorteado::find()->where(['sorteio_id' => $this->sorteio_id])->one()->time_id;
     }
-   
+
     public function getJogosVencedores() {
         $modelsNumeroSorteado = $this->sorteados;
         $modelsVence = $this->categoria->vences;
+        $modelsJogo = $this->jogos;
         $modelTimeSorteado = TimeSorteado::findOne(['sorteio_id' => $this->sorteio_id]);
+        
+        return [];
 
     }
     
-    public function getJogosVencedores1() {
-        $modelsNumeroSorteado = $this->sorteados;
-        foreach ($modelsNumeroSorteado as $index => $modelNumeroSorteado) {
-            $arrNumeroSortado[$index] = $modelNumeroSorteado->numero;
-        }
-
-        $modelsVence = Vence::find()->where(['categoria_id' => $this->categoria_id])->all();
-        foreach ($modelsVence as $index => $modelVence) {
-            $arrVence[$index] = $modelVence->quantidade;
-        }
-
-        $modelTimeSorteado = TimeSorteado::findOne(['sorteio_id' => $this->sorteio_id]);
-
-        $arrJogosVencidos = [];
-        $n = 0;
-
-        $modelsJogo = $this->jogos;
-        foreach ($modelsJogo as $index => $modelJogo) {
-            $modelsNumero = $modelJogo->numeros;
-            $count = 0;
-            foreach ($modelsNumero as $modelNumero) {
-                if (in_array($modelNumero->numero, $arrNumeroSortado)) {
-                    $count++;
-                }
-            }
-
-            $modelJogoTime = JogoTime::findOne(['jogo_id' => $modelJogo->jogo_id]);
-
-            if (in_array($count, $arrVence) || ($modelTimeSorteado != NULL && $modelTimeSorteado->time_id == $modelJogoTime->time_id)) {
-                $arrJogosVencidos[$n] = '<span class="badge badge-default">#' . ($index + 1) . '</span> --> ';
-            }
-
-            if (in_array($count, $arrVence))
-                $arrJogosVencidos[$n] .= 'Venceu com ' . $count . ' Números<br/>';
-
-            if ($modelTimeSorteado != NULL && $modelTimeSorteado->time_id == $modelJogoTime->time_id)
-                $arrJogosVencidos[$n] .= 'Time Sorteado<br/>';
-
-            if (in_array($count, $arrVence) || ($modelTimeSorteado != NULL && $modelTimeSorteado->time_id == $modelJogoTime->time_id)) {
-                $arrJogosVencidos[$n] .= '<br/>';
-            }
-
-            $n++;
-        }
-
-        return $arrJogosVencidos;
-    }
-
 }

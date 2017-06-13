@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return count($model->jogos);
                 }],
             ['class' => 'yii\grid\ActionColumn',
+                'options' => ['style' => 'width: 8%;'],
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
                         return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['class' => 'btn btn-xs btn-info', 'data-pjax' => 0, 'title' => 'Visualizar']);
