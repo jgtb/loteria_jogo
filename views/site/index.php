@@ -1,5 +1,5 @@
 <?php
-$this->title = 'My Yii Application';
+$this->title = 'LOT Jogos';
 
 ?>
 <div class="site-index">

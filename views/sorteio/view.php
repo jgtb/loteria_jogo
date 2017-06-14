@@ -11,9 +11,15 @@ use app\models\Numero;
 Icon::map($this);
 
 $this->title = $model->categoria->descricao;
+$this->params['breadcrumbs'][] = ['label' => $model->categoria->descricao, 'url' => ['index', 'id' => $model->categoria_id]];
+$this->params['breadcrumbs'][] = date('d/m/Y', strtotime($model->data));
+
+$this->title = $model->categoria->descricao;
 $model->categoria_id != 3 ? $count = 1 : $count = 2;
 ?>
 <div class="sorteio-view">
+    
+    <div id="variacao" class="hidden"><?= $model->categoria->variacao ?></div>
 
     <div class="panel panel-default">
         <div class="panel-heading panel-md">
@@ -79,7 +85,7 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
                             <div class="panel-title">Número Sorteado</div>
                         </div>
                         <div class="panel-body">
-                            <?php $form = ActiveForm::begin(['action' => ['sorteado', 'id' => $model->sorteio_id], 'fieldConfig' => ['options' => ['tag' => false]]]); ?>
+                            <?php $form = ActiveForm::begin(['id' => 'form', 'action' => ['sorteado', 'id' => $model->sorteio_id], 'fieldConfig' => ['options' => ['tag' => false]]]); ?>
 
                             <?php if ($model->categoria_id == 6) : ?>
                                 <label class="display-block">Time</label>
@@ -90,13 +96,25 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
                                 <label class="display-block m-b-15"><?= $model->categoria_id != 3 ? 'Jogo' : 'Jogo # ' . ($i + 1) . '' ?></label>
                                 <div>
                                     <?php for ($j = 0; $j < $model->categoria->numero_sorteio; $j++) : ?>
-                                        <?= $form->field($modelSorteado, 'numero[' . $j . '-' . $i . ']', ['options' => ['class' => ''], 'template' => '{input}'])->textInput(['type' => 'number', 'class' => 'form-control text-center', 'value' => $model->getSorteado($j, $i), 'min' => 1, 'max' => $model->categoria->variacao, 'style' => 'margin-bottom: 10px; margin-right: 5px; width: 30%; display: inline;'])->label(false); ?>
+                                        <?= $form->field($modelSorteado, 'numero[' . $j . '-' . $i . ']', ['options' => ['class' => ''], 'template' => '{input}'])->textInput(['type' => 'number', 'id' => $i, 'class' => 'form-control jogo jogo-' . $i . ' text-center', 'value' => $model->getSorteado($j, $i), 'min' => 1, 'max' => $model->categoria->variacao, 'style' => 'margin-bottom: 10px; margin-right: 5px; width: 30%; display: inline;'])->label(false); ?>
                                     <?php endfor; ?>
                                 </div>
                             <?php endfor; ?>
 
+                            <div id="error" class="hidden m-t-10">
+                                <div class="alert alert-error alert-danger">
+                                    <div class="panel-title">
+                                        <div>Possíveis Erros:</div>
+                                        <li>Número Igual</li>
+                                        <li>Número em Branco</li>
+                                        <li>Número com Valor 0</li>
+                                        <li>Número Fora da Variação</li>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group m-t-10">
-                                <?= Html::submitButton($model->hasSorteado() ? 'Salvar' : 'Alterar', ['class' => $model->hasSorteado() ? 'btn btn-success' : 'btn btn-primary']) ?>
+                                <?= Html::button($model->hasSorteado() ? 'Salvar' : 'Alterar', ['id' => 'submitButton', 'class' => $model->hasSorteado() ? 'btn btn-success' : 'btn btn-primary']) ?>
                             </div>
 
                             <?php ActiveForm::end(); ?>
@@ -127,3 +145,74 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
     </div>
 
 </div>
+
+<script type="text/javascript" src="<?= Yii::$app->request->baseUrl . '/js/jquery-1.9.1.min.js' ?>"></script>
+<script type="text/javascript">
+    $(window).load(function () {
+        
+        var variacao = parseInt($('#variacao').html());
+
+        $(document).on("blur", ".jogo", function () {
+            var id = $(this).attr('id');
+
+            var arr = [];
+            $('.jogo-' + id).each(function (index) {
+                var cNumero = $(this).val();
+                arr[index] = cNumero;
+            });
+
+            $('.jogo-' + id).each(function () {
+                var cNumero = $(this).val();
+                if (checaEqual(arr, cNumero) >= 2 && cNumero !== '') {
+                    $(this).addClass('jogo-error');
+                } else {
+                    $(this).removeClass('jogo-error');
+                }
+            });
+
+        });
+
+        function checaEqual(arr, numero) {
+            var count = 0;
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] === numero && arr[i] !== '') {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        function checaJogos()
+        {
+            var flag = true;
+
+            $('.jogo').each(function () {
+                if (parseInt($(this).val()) === 0 || $(this).val() === '' || $(this).hasClass('jogo-error') || $(this).val() > variacao)
+                    flag = false;
+            });
+
+            return flag;
+        }
+
+        function error()
+        {
+            $('#error').removeClass('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function submitForm()
+        {
+            $("#form").submit();
+            $('#error').addClass('hidden');
+        }
+
+        $(document).on("click", "#submitButton", function (e) {
+            e.preventDefault();
+
+            checaJogos() ? submitForm() : error();
+        });
+
+    });
+
+</script>

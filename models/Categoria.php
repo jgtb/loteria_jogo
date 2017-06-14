@@ -29,7 +29,7 @@ class Categoria extends \yii\db\ActiveRecord {
     public function getSorteios() {
         return $this->hasMany(Sorteio::className(), ['categoria_id' => 'categoria_id']);
     }
-    
+
     public function getVences() {
         return $this->hasMany(Vence::className(), ['categoria_id' => 'categoria_id']);
     }
@@ -37,8 +37,17 @@ class Categoria extends \yii\db\ActiveRecord {
     public function getNavBarItems() {
         $modelsCategoria = Categoria::find()->orderBy(['descricao' => SORT_ASC])->all();
 
-        foreach ($modelsCategoria as $index => $modelCategoria)
+        foreach ($modelsCategoria as $index => $modelCategoria) {
             $items[$index] = ['label' => $modelCategoria->descricao, 'url' => ['/sorteio', 'id' => $modelCategoria->categoria_id], 'options' => ['class' => ($_GET['id'] == $modelCategoria->categoria_id) || (Sorteio::findOne($_GET['id'])->categoria_id == $modelCategoria->categoria_id) ? 'active' : '']];
+        }
+        
+        $items[$index + 1] = [
+            'label' => 'LOT Jogos',
+            'items' => [
+                ['label' => 'LOT', 'url' => '/loteria/web'],
+            ],
+        ];
+
         return $items;
     }
 

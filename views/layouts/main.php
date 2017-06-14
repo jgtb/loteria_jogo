@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\models\Categoria;
 
@@ -25,6 +26,8 @@ $model = new Categoria();
         <div class="wrap">
             <?php
             NavBar::begin([
+                'brandLabel' => 'Dashboard',
+                'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
@@ -38,9 +41,23 @@ $model = new Categoria();
             ?>
 
             <div class="container">
+                <?=
+                Breadcrumbs::widget([
+                    'homeLink' => ['label' => 'Dashboard', 'url' => ['/site/index']],
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])
+                ?>
                 <?= $content ?>
             </div>
         </div>
+        
+        <footer class="footer">
+            <div class="container">
+                <p class="pull-left">&copy; LOT Jogos</p>
+
+                <p class="pull-right"><?= date('Y') ?></p>
+            </div>
+        </footer>
         
         <?php $this->endBody() ?>
     </body>

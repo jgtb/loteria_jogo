@@ -16,8 +16,8 @@ body {
 
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
+    background-color: #464545;
+    border-top: 1px solid #464545;
     padding-top: 20px;
 }
 
@@ -34,6 +34,11 @@ body {
 .not-set {
     color: #c55;
     font-style: italic;
+}
+
+.breadcrumb {
+    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 /* add sorting icons to gridview sort links */
@@ -283,4 +288,31 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    color: #fff;
+    background-color: #00a379;
+    border-color: transparent;
+}
+
+.datepicker table tr td span:hover, .datepicker table tr td span.focused {
+    color: #fff;
+    background-color: #009871;
+    border-color: #009871;
+}
+
+.datepicker table tr td.today {
+    color: #fff;
+    background-color: #204d74;
+    border-color: #122b40;
+}
+
+.datepicker table tr td.day:hover, .datepicker table tr td.focused {
+    background: #009871;
+    cursor: pointer;
+}
+
+.datepicker .datepicker-switch:hover, .datepicker .prev:hover, .datepicker .next:hover, .datepicker tfoot tr th:hover {
+    background: #009871;
 }

@@ -72,7 +72,8 @@ Icon::map($this);
                     <div class="col-lg-4 col-lg-offset-4">
                         <div>Possíveis Erros:</div>
                         <li>Número Igual</li>
-                        <li>Número em Branco ou com Zero</li>
+                        <li>Número em Branco</li>
+                        <li>Número com Valor 0</li>
                         <li>Número Fora da Variação</li>
                     </div>
                 </div>
