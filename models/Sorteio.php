@@ -77,13 +77,58 @@ class Sorteio extends \yii\db\ActiveRecord {
     }
 
     public function getJogosVencedores() {
-        $modelsNumeroSorteado = $this->sorteados;
-        $modelsVence = $this->categoria->vences;
-        $modelsJogo = $this->jogos;
         $modelTimeSorteado = TimeSorteado::findOne(['sorteio_id' => $this->sorteio_id]);
-        
-        return [];
 
+        $modelsVence = $this->categoria->vences;
+        foreach ($modelsVence as $i => $modelVence) {
+            $arrVence[$i] = $modelVence->quantidade;
+        }
+
+        $n = 0;
+        $count = $this->categoria_id != 3 ? 1 : 2;
+
+        $modelsJogo = $this->jogos;
+        foreach ($modelsJogo as $i => $modelJogo) {
+
+            $modelsNumero = $modelJogo->numeros;
+            $modelJogoTime = JogoTime::findOne(['jogo_id' => $modelJogo->jogo_id]);
+
+            for ($j = 0; $j < $count; $j++) {
+                $qt = 0;
+                foreach ($modelsNumero as $modelNumero) {
+                    if (Sorteado::findOne(['sorteio_id' => $this->sorteio_id, 'numero' => $modelNumero->numero, 'indice' => $j]))
+                        $qt++;
+                }
+
+                if (in_array($qt, $arrVence) || ($modelTimeSorteado->time_id == $modelJogoTime->time_id && $this->categoria_id == 6)) {
+                    $arrJogosVencedores[$n] = '<span class="badge badge-default">#' . ($i + 1) . '';
+
+                    if (in_array($qt, $arrVence)) {
+                        if ($this->categoria_id == 3) {
+                            $arrJogosVencedores[$n] .= ' - Jogo ' . ($j + 1) . ' --> Venceu com ' . $qt . ' Números';
+                        } else {
+                            $arrJogosVencedores[$n] .= ' --> Venceu com ' . $qt . ' Números';
+                        }
+                    }
+                    
+                    if ($modelTimeSorteado->time_id == $modelJogoTime->time_id && $this->categoria_id == 6) {
+                        if (in_array($qt, $arrVence)) {
+                            $arrJogosVencedores[$n] .= ' e Time Sorteado';
+                        } else {
+                            $arrJogosVencedores[$n] .= ' --> Time Sorteado</span>';
+                        }
+                    } else {
+                        $arrJogosVencedores[$n] .= '</span>';
+                    }
+                    
+                    $arrJogosVencedores[$n] .= '<br/>';
+
+                    $n++;
+                }
+            }
+        }
+
+        return $arrJogosVencedores;
     }
-    
+
 }

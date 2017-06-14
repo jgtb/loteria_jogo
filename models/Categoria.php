@@ -38,7 +38,7 @@ class Categoria extends \yii\db\ActiveRecord {
         $modelsCategoria = Categoria::find()->orderBy(['descricao' => SORT_ASC])->all();
 
         foreach ($modelsCategoria as $index => $modelCategoria)
-            $items[$index] = ['label' => $modelCategoria->descricao, 'url' => ['/sorteio', 'id' => $modelCategoria->categoria_id]];
+            $items[$index] = ['label' => $modelCategoria->descricao, 'url' => ['/sorteio', 'id' => $modelCategoria->categoria_id], 'options' => ['class' => ($_GET['id'] == $modelCategoria->categoria_id) || (Sorteio::findOne($_GET['id'])->categoria_id == $modelCategoria->categoria_id) ? 'active' : '']];
         return $items;
     }
 
