@@ -26,7 +26,7 @@ $model = new Categoria();
         <div class="wrap">
             <?php
             NavBar::begin([
-                'brandLabel' => 'Dashboard',
+                'brandLabel' => 'LOT Jogos',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -43,7 +43,7 @@ $model = new Categoria();
             <div class="container">
                 <?=
                 Breadcrumbs::widget([
-                    'homeLink' => ['label' => 'Dashboard', 'url' => ['/site/index']],
+                    'homeLink' => ['label' => 'LOT Jogos', 'url' => ['/site/index']],
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ])
                 ?>
