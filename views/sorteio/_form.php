@@ -65,22 +65,6 @@ Icon::map($this);
         </div>
     </div>
 
-    <div id="error" class="hidden">
-        <div class="alert alert-error alert-danger">
-            <div class="panel-title">
-                <div class="row">
-                    <div class="col-lg-4 col-lg-offset-4">
-                        <div>Possíveis Erros:</div>
-                        <li>Número Igual</li>
-                        <li>Número em Branco</li>
-                        <li>Número com Valor 0</li>
-                        <li>Número Fora da Variação</li>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="jogos" class="row">
         <?php if (!$model->isNewRecord) : ?>
             <?php foreach ($modelsJogo as $i => $modelJogo) : ?>
@@ -263,17 +247,19 @@ Icon::map($this);
                 panelBody.appendChild(labelNumero);
 
                 //NÚMEROS
+                var isAutomatico = $('#automatico').is(':checked');
+                var classError = !isAutomatico ? ' jogo-error' : '';
                 var arr = randomArr(quantidadeNumeros);
                 for (var j = 0; j < arr.length; j++) {
 
                     var inputNumero = document.createElement('input');
                     inputNumero.setAttribute('type', 'number');
                     inputNumero.setAttribute('id', id);
-                    inputNumero.setAttribute('class', 'form-control text-center input-small jogo jogo-' + id + ' jogo-' + id + '-' + j + '');
+                    inputNumero.setAttribute('class', 'form-control text-center input-small jogo jogo-' + id + ' jogo-' + id + '-' + j + classError);
                     inputNumero.setAttribute('name', 'Jogo[' + id + '][' + id + '-' + j + ']');
                     inputNumero.setAttribute('min', 1);
                     inputNumero.setAttribute('max', variacao);
-                    inputNumero.setAttribute('value', $('#automatico').is(':checked') ? arr[j] : '');
+                    inputNumero.setAttribute('value', isAutomatico ? arr[j] : '');
 
                     panelBody.appendChild(inputNumero);
                 }
@@ -294,6 +280,7 @@ Icon::map($this);
             var id = $(this).attr('id');
             $('.jogo-' + id).each(function () {
                 $(this).val('');
+                $(this).addClass('jogo-error');
             });
         });
 
@@ -320,7 +307,6 @@ Icon::map($this);
 
         $(document).on("blur", ".jogo", function () {
             var id = $(this).attr('id');
-            var flag = true;
 
             var arr = [];
             $('.jogo-' + id).each(function (index) {
@@ -330,17 +316,16 @@ Icon::map($this);
 
             $('.jogo-' + id).each(function () {
                 var cNumero = $(this).val();
-                if (checaEqual(arr, cNumero) >= 2 && cNumero !== '') {
-                    error();
+                if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '' || cNumero === '0' || cNumero > variacao) {
                     $(this).addClass('jogo-error');
                 } else {
                     $(this).removeClass('jogo-error');
                 }
             });
-                        
-        });
 
-        function checaEqual(arr, numero) {
+        });
+        
+        function equalArr(arr, numero) {
             var count = 0;
             for (var i = 0; i < arr.length; i++) {
                 if (arr[i] === numero && arr[i] !== '') {
@@ -356,17 +341,13 @@ Icon::map($this);
             var flag = true;
 
             $('.jogo').each(function () {
-                if (parseInt($(this).val()) === 0 || $(this).val() === '' || $(this).hasClass('jogo-error') || $(this).val() > variacao)
+                if (parseInt($(this).val()) === 0 || $(this).val() === '' || $(this).hasClass('jogo-error') || $(this).val() > variacao) {
+                    $(this).addClass('jogo-error');
                     flag = false;
+                }
             });
 
             return flag;
-        }
-
-        function error()
-        {
-            $('#error').removeClass('hidden');
-            window.scrollTo(0, 0);
         }
 
         function submitForm()
@@ -378,7 +359,7 @@ Icon::map($this);
         $(document).on("click", "#submitButton", function (e) {
             e.preventDefault();
 
-            checaJogos() ? submitForm() : error();
+            checaJogos() ? submitForm() : '';
         });
 
     });

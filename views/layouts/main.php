@@ -32,6 +32,7 @@ $model = new Categoria();
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
             ]);
+            
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav'],
                 'items' => $model->getNavBarItems(),

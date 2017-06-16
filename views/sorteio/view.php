@@ -43,9 +43,9 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
             <div class="row">
 
                 <div class="col-lg-8">
-                    <h3 class="panel-title">Data do Sorteio: <?= date('d/m/Y', strtotime($model->data)) ?> <span class="fa fal-calendar"></span></h3>
+                    <h3 class="panel-title">Data do Sorteio: <?= $model->data != NULL ? date('d/m/Y', strtotime($model->data)) : 'Não inserido'; ?></h3>
                     <br>
-                    <h3 class="panel-title">Número do Sorteio: <?= $model->numero ?></h3>
+                    <h3 class="panel-title">Número do Sorteio: <?= $model->numero != NULL ? $model->numero : 'Não inserido' ?></h3>
                     <br>
                     <h3 class="panel-title">Número de Jogos: <?= count($modelsJogo) ?></h3>
                     <br>
@@ -163,7 +163,7 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
 
             $('.jogo-' + id).each(function () {
                 var cNumero = $(this).val();
-                if (checaEqual(arr, cNumero) >= 2 && cNumero !== '') {
+                if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '' || cNumero === '0') {
                     $(this).addClass('jogo-error');
                 } else {
                     $(this).removeClass('jogo-error');
@@ -172,7 +172,7 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
 
         });
 
-        function checaEqual(arr, numero) {
+        function equalArr(arr, numero) {
             var count = 0;
             for (var i = 0; i < arr.length; i++) {
                 if (arr[i] === numero && arr[i] !== '') {

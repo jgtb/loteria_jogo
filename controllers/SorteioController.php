@@ -56,7 +56,7 @@ class SorteioController extends Controller {
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-            $model->data = date('Y-m-d', strtotime(str_replace('/', '-', $model->data)));
+            $model->data = $model->data != NULL ? date('Y-m-d', strtotime(str_replace('/', '-', $model->data))) : NULL;
             $model->save();
 
             $postJogo = $_POST['Jogo'];
@@ -104,7 +104,7 @@ class SorteioController extends Controller {
     public function actionUpdate($id) {
         $model = $this->findModel($id);
         $model->automatico = true;
-        $model->data = date('d/m/Y', strtotime($model->data));
+        $model->data = $model->data != NULL ? date('d/m/Y', strtotime($model->data)) : NULL;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 

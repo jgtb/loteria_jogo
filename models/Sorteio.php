@@ -14,7 +14,7 @@ class Sorteio extends \yii\db\ActiveRecord {
 
     public function rules() {
         return [
-            [['categoria_id', 'numero', 'data', 'status'], 'required', 'message' => 'Campo Obrigatório'],
+                [['categoria_id', 'numero', 'data', 'status'], 'required', 'message' => 'Campo Obrigatório'],
             [['categoria_id', 'status'], 'integer'],
             [['data'], 'safe'],
             [['categoria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::className(), 'targetAttribute' => ['categoria_id' => 'categoria_id']],

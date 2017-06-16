@@ -29,10 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'tableOptions' => ['class' => 'table table-striped table-bordered'],
         'columns' => [
             ['attribute' => 'data', 'value' => function ($model) {
-                    return date('d/m/Y', strtotime($model->data));
+                    return $model->data != NULL ? date('d/m/Y', strtotime($model->data)) : 'Não inserido';
                 }],
             ['attribute' => 'numero', 'value' => function ($model) {
-                    return $model->numero;
+                    return $model->numero != NULL ? $model->numero : 'Não inserido';
                 }],
             ['attribute' => 'qt_jogos', 'label' => 'Número de Jogos', 'value' => function ($model) {
                     return count($model->jogos);
