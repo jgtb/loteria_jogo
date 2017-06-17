@@ -69,11 +69,11 @@ Icon::map($this);
         <?php if (!$model->isNewRecord) : ?>
             <?php foreach ($modelsJogo as $i => $modelJogo) : ?>
                 <?php $modelsNumero = Numero::find()->where(['jogo_id' => $modelJogo->jogo_id])->orderBy(['numero' => SORT_ASC])->all() ?>
-                <div id="panel-<?= $i ?>" class="col-lg-4">
-                    <div class="panel panel-default panel-jogo panel-small">
+                <div id="panel-<?= $i ?>" class="panel-jogo col-lg-4">
+                    <div class="panel panel-default panel-small">
                         <div class="panel-heading">
                             <div class="panel-title display-inline">
-                                <span class="badge badge-default m-r-15">#<?= $i + 1 ?></span>
+                                <span class="badge badge-default panel-title-contador m-r-15">#<?= $i + 1 ?></span>
                                 <span><?= count($modelsNumero) ?> Números</span>
                             </div>
                             <a id="<?= $i ?>" class="btn btn-delete btn-xs btn-danger fa fa-trash pull-right"></a>
@@ -285,12 +285,15 @@ Icon::map($this);
         });
 
         $(document).on("click", ".btn-delete", function () {
-            var id = $(this).attr('id');
-            $('#panel-' + id).remove();
-            $('#count').html($('.panel-jogo').size());
-            $('.panel-jogo').each(function (index) {
-                $(this).find('.panel-title-contador').html('#' + (index + 1));
-            });
+            var result = confirm('Você tem certeza que deseja excluír este item?');
+            if (result) {
+                var id = $(this).attr('id');
+                $('#panel-' + id).remove();
+                $('#count').html($('.panel-jogo').size());
+                $('.panel-jogo').each(function (index) {
+                    $(this).find('.panel-title-contador').html('#' + (index + 1));
+                });
+            }
         });
 
         $(document).on("click", ".btn-reorder", function () {
@@ -324,7 +327,7 @@ Icon::map($this);
             });
 
         });
-        
+
         function equalArr(arr, numero) {
             var count = 0;
             for (var i = 0; i < arr.length; i++) {
