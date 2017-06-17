@@ -96,22 +96,10 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
                                 <label class="display-block m-b-15"><?= $model->categoria_id != 3 ? 'Jogo' : 'Jogo # ' . ($i + 1) . '' ?></label>
                                 <div>
                                     <?php for ($j = 0; $j < $model->categoria->numero_sorteio; $j++) : ?>
-                                        <?= $form->field($modelSorteado, 'numero[' . $j . '-' . $i . ']', ['options' => ['class' => ''], 'template' => '{input}'])->textInput(['type' => 'number', 'id' => $i, 'class' => 'form-control jogo jogo-' . $i . ' text-center', 'value' => $model->getSorteado($j, $i), 'min' => 1, 'max' => $model->categoria->variacao, 'style' => 'margin-bottom: 10px; margin-right: 5px; width: 30%; display: inline;'])->label(false); ?>
+                                        <?= $form->field($modelSorteado, 'numero[' . $j . '-' . $i . ']', ['options' => ['class' => ''], 'template' => '{input}'])->textInput(['type' => 'number', 'id' => $i, 'class' => $model->getSorteado($j, $i) != NULL ? 'form-control text-center jogo jogo-' . $i . '' : 'form-control text-center jogo jogo-' . $i . ' jogo-error', 'value' => $model->getSorteado($j, $i), 'min' => 1, 'max' => $model->categoria->variacao, 'style' => 'margin-bottom: 10px; margin-right: 5px; width: 30%; display: inline;'])->label(false); ?>
                                     <?php endfor; ?>
                                 </div>
                             <?php endfor; ?>
-
-                            <div id="error" class="hidden m-t-10">
-                                <div class="alert alert-error alert-danger">
-                                    <div class="panel-title">
-                                        <div>Possíveis Erros:</div>
-                                        <li>Número Igual</li>
-                                        <li>Número em Branco</li>
-                                        <li>Número com Valor 0</li>
-                                        <li>Número Fora da Variação</li>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="form-group m-t-10">
                                 <?= Html::button($model->hasSorteado() ? 'Salvar' : 'Alterar', ['id' => 'submitButton', 'class' => $model->hasSorteado() ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -163,7 +151,7 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
 
             $('.jogo-' + id).each(function () {
                 var cNumero = $(this).val();
-                if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '' || cNumero === '0') {
+                if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '' || cNumero === '0' || $(this).val() > variacao) {
                     $(this).addClass('jogo-error');
                 } else {
                     $(this).removeClass('jogo-error');
@@ -195,12 +183,6 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
             return flag;
         }
 
-        function error()
-        {
-            $('#error').removeClass('hidden');
-            window.scrollTo(0, 0);
-        }
-
         function submitForm()
         {
             $("#form").submit();
@@ -210,7 +192,7 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
         $(document).on("click", "#submitButton", function (e) {
             e.preventDefault();
 
-            checaJogos() ? submitForm() : error();
+            checaJogos() ? submitForm() : '';
         });
 
     });

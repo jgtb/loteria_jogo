@@ -341,9 +341,9 @@ Icon::map($this);
             var flag = true;
 
             $('.jogo').each(function () {
-                if (parseInt($(this).val()) === 0 || $(this).val() === '' || $(this).hasClass('jogo-error') || $(this).val() > variacao) {
-                    $(this).addClass('jogo-error');
+                if ($(this).hasClass('jogo-error')) {
                     flag = false;
+                    return false;
                 }
             });
 
