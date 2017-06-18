@@ -77,6 +77,9 @@ class Sorteio extends \yii\db\ActiveRecord {
     }
 
     public function getJogosVencedores() {
+        
+        ini_set('max_execution_time', 300);
+        
         $modelTimeSorteado = TimeSorteado::findOne(['sorteio_id' => $this->sorteio_id]);
 
         $modelsVence = $this->categoria->vences;
