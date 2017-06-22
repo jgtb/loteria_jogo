@@ -19,11 +19,9 @@ Icon::map($this);
     <div class="row">
         <div class="col-lg-6">
             <?= $form->field($model, 'numero')->textInput(); ?>
-
         </div>
         <div class="col-lg-6">
-            <?=
-            $form->field($model, 'data')->widget(DatePicker::className(), [
+            <?= $form->field($model, 'data')->widget(DatePicker::className(), [
                 'language' => 'pt-BR',
                 'removeButton' => ['icon' => 'trash'],
                 'pluginOptions' => [
@@ -34,7 +32,7 @@ Icon::map($this);
             ])
             ?>
         </div>
-    </div> 
+    </div>
 
     <div id="variacao" class="hidden"><?= $model->categoria->variacao ?></div>
     <div id="categoria-id" class="hidden"><?= $model->categoria_id ?></div>
@@ -109,6 +107,7 @@ Icon::map($this);
         var categoriaID = parseInt($('#categoria-id').html());
         var variacao = parseInt($('#variacao').html());
 
+        //Gera um Array[Números] de forma aleatoria
         function randomArr(quantidadeNumeros) {
             var arr = [];
             while (arr.length < quantidadeNumeros) {
@@ -121,6 +120,7 @@ Icon::map($this);
             return order(arr);
         }
 
+        //Ordena um Array[Números] em ordem crescente
         function order(arr) {
             for (var i = 0; i < arr.length; i++) {
                 var target = arr[i];
@@ -132,6 +132,7 @@ Icon::map($this);
             return arr;
         }
 
+        //Adiciona Jogo(s) ao Painel Principal (#jogos)
         $('.btn-add').on('click', function (e) {
             e.preventDefault();
 
@@ -276,6 +277,7 @@ Icon::map($this);
             $('#count').html(count);
         });
 
+        //Reseta todos os Números de um Jogo
         $(document).on("click", ".btn-reset", function () {
             var id = $(this).attr('id');
             $('.jogo-' + id).each(function () {
@@ -284,6 +286,7 @@ Icon::map($this);
             });
         });
 
+        //Deleta um Jogo
         $(document).on("click", ".btn-delete", function () {
             var result = confirm('Você tem certeza que deseja excluír este item?');
             if (result) {
@@ -296,6 +299,7 @@ Icon::map($this);
             }
         });
 
+        //Randomiza os Números de um Jogo
         $(document).on("click", ".btn-reorder", function () {
             var id = $(this).attr('id');
             var quantidadeNumeros = parseInt($('.jogo-' + id).size());
@@ -308,6 +312,7 @@ Icon::map($this);
             });
         });
 
+        //Valida o Número sempre quando ele é alterado
         $(document).on("blur", ".jogo", function () {
             var id = $(this).attr('id');
 
@@ -319,7 +324,7 @@ Icon::map($this);
 
             $('.jogo-' + id).each(function () {
                 var cNumero = $(this).val();
-                if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '' || cNumero === '0' || cNumero > variacao) {
+                if (validaNumero(arr, cNumero)) {
                     $(this).addClass('jogo-error');
                 } else {
                     $(this).removeClass('jogo-error');
@@ -328,6 +333,19 @@ Icon::map($this);
 
         });
 
+        //Valida um Número dentro de um Array[Números]
+                          //  Não pode ser igual
+                          //  Diferente de vazio
+                          //  Diferente de 0
+                          //  Entre o limite da variação do jogo
+        function validaNumero(arr, cNumero) {
+            if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '' || cNumero === '0' || cNumero > variacao)
+              return true;
+
+            return false;
+        }
+
+        //Conta quantas vezes um Número é igual dentro de Array[Números]
         function equalArr(arr, numero) {
             var count = 0;
             for (var i = 0; i < arr.length; i++) {
@@ -339,6 +357,7 @@ Icon::map($this);
             return count;
         }
 
+        //Verifica se algum Jogo possui um Número com error (Verificação antes do submit)
         function checaJogos()
         {
             var flag = true;
@@ -353,12 +372,13 @@ Icon::map($this);
             return flag;
         }
 
+        //Submita o Form
         function submitForm()
         {
             $("#form").submit();
-            $('#error').addClass('hidden');
         }
 
+        //Clique para Salvar ou Alterar
         $(document).on("click", "#submitButton", function (e) {
             e.preventDefault();
 
