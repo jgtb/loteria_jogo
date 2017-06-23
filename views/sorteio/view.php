@@ -18,7 +18,7 @@ $this->title = $model->categoria->descricao;
 $model->categoria_id != 3 ? $count = 1 : $count = 2;
 ?>
 <div class="sorteio-view">
-    
+
     <div id="variacao" class="hidden"><?= $model->categoria->variacao ?></div>
 
     <div class="panel panel-default">
@@ -49,7 +49,7 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
                     <br>
                     <h3 class="panel-title">Número de Jogos: <?= count($modelsJogo) ?></h3>
                     <br>
-
+                    
                     <div class="row">
                         <?php foreach ($modelsJogo as $index => $modelJogo) : ?>
                             <?php $modelsNumero = Numero::find()->where(['jogo_id' => $modelJogo->jogo_id])->orderBy(['numero' => SORT_ASC])->all() ?>
@@ -68,7 +68,7 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
                                         <?php for ($i = 0; $i < $count; $i++) : ?>
                                             <label class="display-block <?= $i == 1 ? 'm-t-10' : '' ?>"><?= $model->categoria_id != 3 ? 'Jogo' : 'Jogo # ' . ($i + 1) . '' ?></label>          
                                             <?php foreach ($modelsNumero as $modelNumero) : ?>
-                                                <span class="badge <?= $model->numeroSorteado($modelNumero->numero, $i) ? 'badge-success' : 'badge-default' ?>"><?= $modelNumero->numero ?></span>
+                                                <span class="badge <?= $model->numeroSorteado($modelNumero->numero, $i) ? 'badge-success' : 'badge-default' ?>"><?= $modelNumero->numero != NULL ? $modelNumero->numero : '?' ?></span>
                                             <?php endforeach; ?>
                                         <?php endfor; ?>
                                     </div>  
@@ -137,7 +137,7 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
 <script type="text/javascript" src="<?= Yii::$app->request->baseUrl . '/js/jquery-1.9.1.min.js' ?>"></script>
 <script type="text/javascript">
     $(window).load(function () {
-        
+
         var variacao = parseInt($('#variacao').html());
 
         $(document).on("blur", ".jogo", function () {

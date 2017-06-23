@@ -316,3 +316,8 @@ input:checked + .slider:before {
 .datepicker .datepicker-switch:hover, .datepicker .prev:hover, .datepicker .next:hover, .datepicker tfoot tr th:hover {
     background: #009871;
 }
+
+
+.badge {
+    padding: 5px 9px;
+}

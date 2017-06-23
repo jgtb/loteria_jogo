@@ -14,8 +14,7 @@ $this->params['breadcrumbs'][] = 'Alterar';
                 <div class="panel-heading panel-md">
                     <div class="panel-title pull-left"><?= $this->title ?></div>
                     <div class="btn-group pull-right">
-                        <?= Html::a('Visualizar', ['view', 'id' => $model->sorteio_id], ['class' => 'btn btn-info pull-right']) ?>
-                        <?= Html::button($model->isNewRecord ? 'Salvar' : 'Alterar', ['id' => 'submitButton', 'class' => $model->isNewRecord ? 'btn btn-success pull-right m-r-15' : 'btn btn-primary pull-right m-r-15']) ?>
+                        <?= Html::button($model->isNewRecord ? 'Salvar' : 'Salvar', ['id' => 'submitButton', 'class' => $model->isNewRecord ? 'btn btn-success pull-right m-r-15' : 'btn btn-success pull-right m-r-15']) ?>
                     </div>
                 </div>
                 <div class="panel-body">

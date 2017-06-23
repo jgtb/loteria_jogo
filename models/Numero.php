@@ -15,7 +15,7 @@ class Numero extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['jogo_id', 'numero'], 'required'],
+            [['jogo_id'], 'required'],
             [['jogo_id', 'numero'], 'integer'],
             [['jogo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Jogo::className(), 'targetAttribute' => ['jogo_id' => 'jogo_id']],
         ];

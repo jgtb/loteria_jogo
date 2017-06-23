@@ -249,14 +249,13 @@ Icon::map($this);
 
                 //NÚMEROS
                 var isAutomatico = $('#automatico').is(':checked');
-                var classError = !isAutomatico ? ' jogo-error' : '';
                 var arr = randomArr(quantidadeNumeros);
                 for (var j = 0; j < arr.length; j++) {
 
                     var inputNumero = document.createElement('input');
                     inputNumero.setAttribute('type', 'number');
                     inputNumero.setAttribute('id', id);
-                    inputNumero.setAttribute('class', 'form-control text-center input-small jogo jogo-' + id + ' jogo-' + id + '-' + j + classError);
+                    inputNumero.setAttribute('class', 'form-control text-center input-small jogo jogo-' + id + ' jogo-' + id + '-' + j);
                     inputNumero.setAttribute('name', 'Jogo[' + id + '][' + id + '-' + j + ']');
                     inputNumero.setAttribute('min', 1);
                     inputNumero.setAttribute('max', variacao);
@@ -282,7 +281,6 @@ Icon::map($this);
             var id = $(this).attr('id');
             $('.jogo-' + id).each(function () {
                 $(this).val('');
-                $(this).addClass('jogo-error');
             });
         });
 
@@ -335,11 +333,11 @@ Icon::map($this);
 
         //Valida um Número dentro de um Array[Números]
                           //  Não pode ser igual
-                          //  Diferente de vazio
                           //  Diferente de 0
                           //  Entre o limite da variação do jogo
         function validaNumero(arr, cNumero) {
-            if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '' || cNumero === '0' || cNumero > variacao)
+            console.log(cNumero);
+            if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '0' || cNumero > variacao)
               return true;
 
             return false;
