@@ -21,7 +21,8 @@ Icon::map($this);
             <?= $form->field($model, 'numero')->textInput(); ?>
         </div>
         <div class="col-lg-6">
-            <?= $form->field($model, 'data')->widget(DatePicker::className(), [
+            <?=
+            $form->field($model, 'data')->widget(DatePicker::className(), [
                 'language' => 'pt-BR',
                 'removeButton' => ['icon' => 'trash'],
                 'pluginOptions' => [
@@ -85,7 +86,7 @@ Icon::map($this);
                             <?php endif; ?>
                             <label class="display-block">Números</label>
                             <?php foreach ($modelsNumero as $j => $modelNumero) : ?>
-                                <input type="number" id="<?= $i ?>" class="form-control text-center input-small jogo jogo-<?= $i ?> jogo-<?= $i ?>-<?= $j ?>" name="Jogo[<?= $i ?>][<?= $i ?>-<?= $j ?>]" value="<?= $modelNumero->numero ?>" min="1" max="<?= $model->categoria->variacao ?>">
+                                <input type="text" id="<?= $i ?>" class="form-control text-center input-small jogo jogo-<?= $i ?> jogo-<?= $i ?>-<?= $j ?>" name="Jogo[<?= $i ?>][<?= $i ?>-<?= $j ?>]" value="<?= $modelNumero->numero ?>" min="1" max="<?= $model->categoria->variacao ?>">
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -253,7 +254,7 @@ Icon::map($this);
                 for (var j = 0; j < arr.length; j++) {
 
                     var inputNumero = document.createElement('input');
-                    inputNumero.setAttribute('type', 'number');
+                    inputNumero.setAttribute('type', 'text');
                     inputNumero.setAttribute('id', id);
                     inputNumero.setAttribute('class', 'form-control text-center input-small jogo jogo-' + id + ' jogo-' + id + '-' + j);
                     inputNumero.setAttribute('name', 'Jogo[' + id + '][' + id + '-' + j + ']');
@@ -286,15 +287,30 @@ Icon::map($this);
 
         //Deleta um Jogo
         $(document).on("click", ".btn-delete", function () {
-            var result = confirm('Você tem certeza que deseja excluír este item?');
-            if (result) {
-                var id = $(this).attr('id');
-                $('#panel-' + id).remove();
-                $('#count').html($('.panel-jogo').size());
-                $('.panel-jogo').each(function (index) {
-                    $(this).find('.panel-title-contador').html('#' + (index + 1));
-                });
-            }
+            var id = $(this).attr('id');
+            swal({
+                title: "Você tem certeza que deseja excluír este item?",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#8CD4F5",
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
+                allowOutsideClick: true,
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    swal("Excluído com sucesso!", "", "success");
+                    $('#panel-' + id).remove();
+                    $('#count').html($('.panel-jogo').size());
+                    $('.panel-jogo').each(function (index) {
+                        $(this).find('.panel-title-contador').html('#' + (index + 1));
+                    });
+                } else {
+                    swal("Cancelado", "", "error");
+                }
+            });
         });
 
         //Randomiza os Números de um Jogo
@@ -332,13 +348,13 @@ Icon::map($this);
         });
 
         //Valida um Número dentro de um Array[Números]
-                          //  Não pode ser igual
-                          //  Diferente de 0
-                          //  Entre o limite da variação do jogo
+        //  Não pode ser igual
+        //  Diferente de 0
+        //  Entre o limite da variação do jogo
         function validaNumero(arr, cNumero) {
             console.log(cNumero);
             if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '0' || cNumero > variacao)
-              return true;
+                return true;
 
             return false;
         }

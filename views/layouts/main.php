@@ -5,9 +5,12 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii2mod\alert\Alert;
+use yii2mod\alert\AlertAsset;
 use app\models\Categoria;
 
 AppAsset::register($this);
+AlertAsset::register($this);
 $model = new Categoria();
 ?>
 <?php $this->beginPage() ?>
@@ -48,6 +51,7 @@ $model = new Categoria();
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ])
                 ?>
+                <?php echo Alert::widget(); ?>
                 <?= $content ?>
             </div>
         </div>

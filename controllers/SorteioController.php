@@ -28,14 +28,14 @@ class SorteioController extends Controller {
         ];
     }
 
-    public function actionIndex($id) {
+    public function actionIndex($cID) {
         $searchModel = new SorteioSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $cID);
 
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'id' => $id
+                    'cID' => $cID
         ]);
     }
 
@@ -48,10 +48,10 @@ class SorteioController extends Controller {
         ]);
     }
 
-    public function actionCreate($id) {
+    public function actionCreate($cID) {
         $model = new Sorteio();
         $model->automatico = true;
-        $model->categoria_id = $id;
+        $model->categoria_id = $cID;
         $model->status = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -90,13 +90,15 @@ class SorteioController extends Controller {
                     }
                 }
             }
+            
+            //Yii::$app->session->setFlash('success', 'Sorteio registrado com sucesso!');
 
             return $this->redirect(['view', 'id' => $model->sorteio_id]);
         } else {
             return $this->render('create', [
                         'model' => $model,
                         'modelsTime' => Time::find()->orderBy(['descricao' => SORT_ASC])->asArray()->all(),
-                        'id' => $id,
+                        'cID' => $cID,
             ]);
         }
     }
@@ -144,6 +146,8 @@ class SorteioController extends Controller {
                     }
                 }
             }
+            
+            //Yii::$app->session->setFlash('success', 'Sorteio alterado com sucesso!');
 
             return $this->redirect(['view', 'id' => $model->sorteio_id]);
         } else {
@@ -182,6 +186,8 @@ class SorteioController extends Controller {
                 }
             }
         }
+        
+        //Yii::$app->session->setFlash('success', 'Números Sorteados registrados com sucesso!');
 
         return $this->redirect(['view', 'id' => $id]);
     }
@@ -194,8 +200,10 @@ class SorteioController extends Controller {
     public function actionDelete($id) {
         $model = $this->findModel($id);
         $model->delete();
+        
+        //Yii::$app->session->setFlash('success', 'Sorteio excluído com sucesso!');
 
-        return $this->redirect(['index', 'id' => $model->categoria_id]);
+        return $this->redirect(['index', 'cID' => $model->categoria_id]);
     }
 
     protected function findModel($id) {

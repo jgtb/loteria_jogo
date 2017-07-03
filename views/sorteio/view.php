@@ -11,7 +11,7 @@ use app\models\Numero;
 Icon::map($this);
 
 $this->title = $model->categoria->descricao;
-$this->params['breadcrumbs'][] = ['label' => $model->categoria->descricao, 'url' => ['index', 'id' => $model->categoria_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->categoria->descricao, 'url' => ['index', 'cID' => $model->categoria_id]];
 $this->params['breadcrumbs'][] = date('d/m/Y', strtotime($model->data));
 
 $this->title = $model->categoria->descricao;
@@ -96,7 +96,7 @@ $model->categoria_id != 3 ? $count = 1 : $count = 2;
                                 <label class="display-block m-b-15"><?= $model->categoria_id != 3 ? 'Jogo' : 'Jogo # ' . ($i + 1) . '' ?></label>
                                 <div>
                                     <?php for ($j = 0; $j < $model->categoria->numero_sorteio; $j++) : ?>
-                                        <?= $form->field($modelSorteado, 'numero[' . $j . '-' . $i . ']', ['options' => ['class' => ''], 'template' => '{input}'])->textInput(['type' => 'number', 'id' => $i, 'class' => $model->getSorteado($j, $i) != NULL ? 'form-control text-center jogo jogo-' . $i . '' : 'form-control text-center jogo jogo-' . $i . ' jogo-error', 'value' => $model->getSorteado($j, $i), 'min' => 1, 'max' => $model->categoria->variacao, 'style' => 'margin-bottom: 10px; margin-right: 5px; width: 30%; display: inline;'])->label(false); ?>
+                                        <?= $form->field($modelSorteado, 'numero[' . $j . '-' . $i . ']', ['options' => ['class' => ''], 'template' => '{input}'])->textInput(['type' => 'text', 'id' => $i, 'class' => $model->getSorteado($j, $i) != NULL ? 'form-control text-center jogo jogo-' . $i . '' : 'form-control text-center jogo jogo-' . $i . ' jogo-error', 'value' => $model->getSorteado($j, $i), 'min' => 1, 'max' => $model->categoria->variacao, 'style' => 'margin-bottom: 10px; margin-right: 5px; width: 20%; display: inline;'])->label(false); ?>
                                     <?php endfor; ?>
                                 </div>
                             <?php endfor; ?>

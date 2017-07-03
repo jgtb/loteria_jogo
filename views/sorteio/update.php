@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 $this->title = $model->categoria->descricao;
-$this->params['breadcrumbs'][] = ['label' => $model->categoria->descricao, 'url' => ['index', 'id' => $model->categoria_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->categoria->descricao, 'url' => ['index', 'cID' => $model->categoria_id]];
 $this->params['breadcrumbs'][] = 'Alterar';
 ?>
 <div class="sorteio-update">

@@ -10,14 +10,14 @@ Icon::map($this);
 
 $modelCategoria = new Categoria();
 
-$this->title = $modelCategoria->getTitle($id);
+$this->title = $modelCategoria->getTitle($cID);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sorteio-index">
     
     <h3><?= $this->title ?></h3>
     
-    <?= Html::a('Nova ' . $this->title, ['create', 'id' => $id], ['class' => 'btn btn-warning']) ?>
+    <?= Html::a('Nova ' . $this->title, ['create', 'cID' => $cID], ['class' => 'btn btn-warning']) ?>
     
     <?php Pjax::begin(['id' => 'pjax-sorteio', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST']]); ?>
 
@@ -38,13 +38,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return count($model->jogos);
                 }],
             ['class' => 'yii\grid\ActionColumn',
-                'options' => ['style' => 'width: 8%;'],
+                'visible' => $dataProvider->getModels() != NULL,
+                'options' => ['style' => 'width: 9%;'],
+                'header' => 'Opcões',
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['class' => 'btn btn-xs btn-info', 'data-pjax' => 0, 'title' => 'Visualizar']);
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['class' => 'btn btn-xs btn-info m-r-5', 'data-pjax' => 0, 'title' => 'Visualizar']);
                     },
                     'update' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-edit"></span>', $url, ['class' => 'btn btn-xs btn-primary', 'data-pjax' => 0, 'title' => 'Alterar']);
+                        return Html::a('<span class="glyphicon glyphicon-edit"></span>', $url, ['class' => 'btn btn-xs btn-primary m-r-5', 'data-pjax' => 0, 'title' => 'Alterar']);
                     },
                     'delete' => function ($url, $model, $key) use ($id) {
                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['class' => 'btn btn-xs btn-danger', 'title' => 'Excluír', 'data-pjax' => 0, 'data-confirm' => 'Você tem certeza que deseja excluír este item?', 'data-method' => 'post']);

@@ -38,14 +38,14 @@ class Categoria extends \yii\db\ActiveRecord {
         $modelsCategoria = Categoria::find()->orderBy(['descricao' => SORT_ASC])->all();
 
         foreach ($modelsCategoria as $index => $modelCategoria) {
-            $items[$index] = ['label' => $modelCategoria->descricao, 'url' => ['/sorteio', 'id' => $modelCategoria->categoria_id], 'options' => ['class' => ($_GET['id'] == $modelCategoria->categoria_id) || (Sorteio::findOne($_GET['id'])->categoria_id == $modelCategoria->categoria_id) ? 'active' : '']];
+            $items[$index] = ['label' => $modelCategoria->descricao, 'url' => ['/sorteio', 'cID' => $modelCategoria->categoria_id], 'options' => ['class' => ($_GET['cID'] == $modelCategoria->categoria_id) || (Sorteio::findOne($_GET['id'])->categoria_id == $modelCategoria->categoria_id) ? 'active' : '']];
         }
         
         $items[$index + 1] = [
             'label' => 'LOT Jogos',
             'items' => [
                 ['label' => 'LOT', 'url' => '/loteria/web'],
-                ['label' => 'BASIC', 'url' => '/basic/web'],
+                ['label' => 'CR.CP', 'url' => '/crcp/web'],
             ],
         ];
 

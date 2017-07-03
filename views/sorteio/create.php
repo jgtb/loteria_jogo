@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 $this->title = 'Nova ' . $model->categoria->descricao;
-$this->params['breadcrumbs'][] = ['label' => $model->categoria->descricao, 'url' => ['index', 'id' => $id]];
+$this->params['breadcrumbs'][] = ['label' => $model->categoria->descricao, 'url' => ['index', 'cID' => $cID]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sorteio-create">
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'model' => $model,
                         'modelsJogo' => $modelsJogo,
                         'modelsTime' => $modelsTime,
-                        'id' => $id
+                        'cID' => $cID
                     ])
                     ?>
                 </div>

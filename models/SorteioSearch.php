@@ -22,9 +22,9 @@ class SorteioSearch extends Sorteio
         return Model::scenarios();
     }
 
-    public function search($params, $id)
+    public function search($params, $cID)
     {
-        $query = Sorteio::find()->where(['categoria_id' => $id, 'status' => 1])->orderBy(['numero' => SORT_DESC]);
+        $query = Sorteio::find()->where(['categoria_id' => $cID, 'status' => 1])->orderBy(['numero' => SORT_DESC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
