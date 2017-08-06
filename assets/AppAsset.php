@@ -9,6 +9,7 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        'css/bootstrap-darkly.css',
         'css/site.css',
     ];
     public $js = [

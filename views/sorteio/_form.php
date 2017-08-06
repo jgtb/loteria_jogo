@@ -4,12 +4,10 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
-use kartik\icons\Icon;
 use app\models\Time;
 use app\models\JogoTime;
 use app\models\Numero;
 
-Icon::map($this);
 ?>
 
 <div class="sorteio-form">
@@ -344,7 +342,6 @@ Icon::map($this);
                     $(this).removeClass('jogo-error');
                 }
             });
-
         });
 
         //Valida um Número dentro de um Array[Números]
@@ -352,7 +349,6 @@ Icon::map($this);
         //  Diferente de 0
         //  Entre o limite da variação do jogo
         function validaNumero(arr, cNumero) {
-            console.log(cNumero);
             if ((equalArr(arr, cNumero) >= 2 && cNumero !== '') || cNumero === '0' || cNumero > variacao)
                 return true;
 

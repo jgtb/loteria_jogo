@@ -45,7 +45,7 @@ class Categoria extends \yii\db\ActiveRecord {
             'label' => 'LOT Jogos',
             'items' => [
                 ['label' => 'LOT', 'url' => '/loteria/web'],
-                ['label' => 'CR.CP', 'url' => '/crcp/web'],
+                //['label' => 'CR.CP', 'url' => '/crcp/web'],
             ],
         ];
 

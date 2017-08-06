@@ -64,7 +64,7 @@ class SorteioController extends Controller {
                 foreach ($postJogo as $i => $postNumero) {
                     foreach ($postNumero as $j => $postN) {
 
-                        if (split('-', $j)[1] == 0) {
+                        if (explode('-', $j)[1] == 0) {
                             $modelJogo = new Jogo();
                             $modelJogo->sorteio_id = $model->sorteio_id;
                             $modelJogo->status = 1;
@@ -74,7 +74,7 @@ class SorteioController extends Controller {
                         if ($model->categoria_id == 6) {
                             $postJogoTime = $_POST['JogoTime'];
                             foreach ($postJogoTime as $k => $postJT) {
-                                if (split('-', $j)[0] == $k) {
+                                if (explode('-', $j)[0] == $k) {
                                     $modelJogoTime = new JogoTime();
                                     $modelJogoTime->jogo_id = $modelJogo->jogo_id;
                                     $modelJogoTime->time_id = $postJT;
@@ -91,7 +91,7 @@ class SorteioController extends Controller {
                 }
             }
             
-            //Yii::$app->session->setFlash('success', 'Sorteio registrado com sucesso!');
+            Yii::$app->session->setFlash('success', 'Sorteio registrado com sucesso!');
 
             return $this->redirect(['view', 'id' => $model->sorteio_id]);
         } else {
@@ -120,7 +120,7 @@ class SorteioController extends Controller {
                 foreach ($postJogo as $i => $postNumero) {
                     foreach ($postNumero as $j => $postN) {
 
-                        if (split('-', $j)[1] == 0) {
+                        if (explode('-', $j)[1] == 0) {
                             $modelJogo = new Jogo();
                             $modelJogo->sorteio_id = $model->sorteio_id;
                             $modelJogo->status = 1;
@@ -130,7 +130,7 @@ class SorteioController extends Controller {
                         if ($model->categoria_id == 6) {
                             $postJogoTime = $_POST['JogoTime'];
                             foreach ($postJogoTime as $k => $postJT) {
-                                if (split('-', $j)[0] == $k) {
+                                if (explode('-', $j)[0] == $k) {
                                     $modelJogoTime = new JogoTime();
                                     $modelJogoTime->jogo_id = $modelJogo->jogo_id;
                                     $modelJogoTime->time_id = $postJT;
@@ -147,7 +147,7 @@ class SorteioController extends Controller {
                 }
             }
             
-            //Yii::$app->session->setFlash('success', 'Sorteio alterado com sucesso!');
+            Yii::$app->session->setFlash('success', 'Sorteio alterado com sucesso!');
 
             return $this->redirect(['view', 'id' => $model->sorteio_id]);
         } else {
@@ -181,13 +181,13 @@ class SorteioController extends Controller {
                     $modelSorteado = new Sorteado();
                     $modelSorteado->sorteio_id = $id;
                     $modelSorteado->numero = $p;
-                    $modelSorteado->indice = split('-', $index)[1];
+                    $modelSorteado->indice = explode('-', $index)[1];
                     $modelSorteado->save();
                 }
             }
         }
         
-        //Yii::$app->session->setFlash('success', 'Números Sorteados registrados com sucesso!');
+        Yii::$app->session->setFlash('success', 'Números Sorteados registrados com sucesso!');
 
         return $this->redirect(['view', 'id' => $id]);
     }
@@ -201,7 +201,7 @@ class SorteioController extends Controller {
         $model = $this->findModel($id);
         $model->delete();
         
-        //Yii::$app->session->setFlash('success', 'Sorteio excluído com sucesso!');
+        Yii::$app->session->setFlash('success', 'Sorteio excluído com sucesso!');
 
         return $this->redirect(['index', 'cID' => $model->categoria_id]);
     }

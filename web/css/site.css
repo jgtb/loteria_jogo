@@ -326,3 +326,8 @@ input:checked + .slider:before {
     text-align: center;
     vertical-align: middle;
 }
+
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: #ffffff;
+    background-color: #00a379;
+}

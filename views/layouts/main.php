@@ -4,14 +4,18 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
 use yii2mod\alert\Alert;
 use yii2mod\alert\AlertAsset;
+use app\assets\AppAsset;
 use app\models\Categoria;
+use kartik\icons\Icon;
+
+Icon::map($this);
 
 AppAsset::register($this);
 AlertAsset::register($this);
 $model = new Categoria();
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
